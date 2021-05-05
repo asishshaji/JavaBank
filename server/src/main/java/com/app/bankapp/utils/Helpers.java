@@ -59,7 +59,6 @@ public class Helpers {
   }
 
   public static String parseJWT(String jwtToken) {
-    jwtToken = jwtToken.split(" ")[1];
     Claims claims = Jwts
       .parser()
       .setSigningKey(Helpers.secretKey.getBytes())

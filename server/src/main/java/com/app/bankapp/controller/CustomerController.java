@@ -50,6 +50,7 @@ public class CustomerController {
     @RequestHeader("authorization") String jwtToken,
     @RequestBody Account account
   ) {
+    System.out.println(account.toString());
     String uEmail = Helpers.parseJWT(jwtToken);
 
     Customer customer = _customerService.getCustomerByEmail(uEmail);
@@ -57,8 +58,8 @@ public class CustomerController {
     Map<String, String> msg = new HashMap<>();
 
     account.setCustomer(customer);
-    account.set_ownerName(customer.get_email());
     account.set_id(customer.get_id());
+    account.set_balance(0.0);
 
     Account rAccount = bankService.createAccount(account);
 
@@ -80,6 +81,8 @@ public class CustomerController {
     Customer customer = _customerService.getCustomerByEmail(uEmail);
 
     Account account = bankService.getAccount(customer.get_id());
+
+    System.out.println(account);
 
     return account;
   }
