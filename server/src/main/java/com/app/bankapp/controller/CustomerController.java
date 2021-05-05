@@ -25,18 +25,24 @@ public class CustomerController {
   private BankService bankService;
 
   @PostMapping("/register")
-  public String createNewCustomer(@RequestBody Customer customer) {
-    if (
-      _customerService.createCustomer(customer) != null
-    ) return "Created new customer";
-    return "";
+  public Map<String, String> createNewCustomer(@RequestBody Customer customer) {
+    Map<String, String> msg = new HashMap<>();
+
+    if (_customerService.createCustomer(customer) != null) {
+      msg.put("message", "Created user");
+      return msg;
+    }
+    return msg;
   }
 
   @PostMapping("/login")
-  public String loginUser(@RequestBody Customer customer) {
-    if (
-      _customerService.getCustomerByEmail(customer.get_email()) != null
-    ) return Helpers.getJWTToken(customer.get_email()); else return "";
+  public Map<String, String> loginUser(@RequestBody Customer customer) {
+    Map<String, String> msg = new HashMap<>();
+
+    if (_customerService.getCustomerByEmail(customer.get_email()) != null) {
+      msg.put("token", Helpers.getJWTToken(customer.get_email()));
+      return msg;
+    } else return msg;
   }
 
   @PostMapping("/create")
@@ -79,15 +85,9 @@ public class CustomerController {
   }
 
   @GetMapping("")
-  public Map<String, String> sayHi(
-    @RequestHeader("authorization") String jwtToken
-  ) {
-    String uEmail = Helpers.parseJWT(jwtToken);
-    Customer customer = _customerService.getCustomerByEmail(uEmail);
-
+  public Map<String, String> sayHi() {
     Map<String, String> map = new HashMap<>();
-    map.put("email", uEmail);
-    map.put("customer", customer.toString());
+    map.put("email", "uEm");
     return map;
   }
 }

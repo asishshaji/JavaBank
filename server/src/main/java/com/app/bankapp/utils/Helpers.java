@@ -55,7 +55,7 @@ public class Helpers {
       .signWith(SignatureAlgorithm.HS512, secretKey.getBytes())
       .compact();
 
-    return "Bearer " + token;
+    return token;
   }
 
   public static String parseJWT(String jwtToken) {

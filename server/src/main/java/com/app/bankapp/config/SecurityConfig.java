@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         UsernamePasswordAuthenticationFilter.class
       )
       .authorizeRequests()
-      .antMatchers(HttpMethod.POST, "/api/v1/customer/**")
+      .antMatchers("/api/v1/customer/**")
       .permitAll()
       .anyRequest()
       .authenticated();
