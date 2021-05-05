@@ -79,11 +79,15 @@ public class CustomerController {
   }
 
   @GetMapping("")
-  public Map<String, String> sayHi() {
-    System.out.println("Gu");
+  public Map<String, String> sayHi(
+    @RequestHeader("authorization") String jwtToken
+  ) {
+    String uEmail = Helpers.parseJWT(jwtToken);
+    Customer customer = _customerService.getCustomerByEmail(uEmail);
+
     Map<String, String> map = new HashMap<>();
-    map.put("ASD", "asd");
-    map.put("DF", "ASF");
+    map.put("email", uEmail);
+    map.put("customer", customer.toString());
     return map;
   }
 }
