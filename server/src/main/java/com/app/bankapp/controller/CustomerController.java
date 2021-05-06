@@ -9,10 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -59,7 +61,7 @@ public class CustomerController {
 
     account.setCustomer(customer);
     account.set_id(customer.get_id());
-    account.set_balance(0.0);
+    // account.set_balance(0.0);
 
     Account rAccount = bankService.createAccount(account);
 
@@ -85,6 +87,40 @@ public class CustomerController {
     System.out.println(account);
 
     return account;
+  }
+
+  @GetMapping("/withdraw/{amount}")
+  public Account withDrawMoney(
+    @RequestHeader("authorization") String jwtToken,
+    @PathVariable Double amount
+  ) {
+    System.out.println("helloooo");
+    String uEmail = Helpers.parseJWT(jwtToken);
+    System.out.println(uEmail);
+
+    Customer customer = _customerService.getCustomerByEmail(uEmail);
+    Account account = bankService.getAccount(customer.get_id());
+
+    account.withDrawMoney(amount);
+    Account rAccount = bankService.createAccount(account);
+    return rAccount;
+  }
+
+  @GetMapping("/deposit/{amount}")
+  public Account depositMoney(
+    @RequestHeader("authorization") String jwtToken,
+    @PathVariable Double amount
+  ) {
+    System.out.println("helloooo");
+    String uEmail = Helpers.parseJWT(jwtToken);
+    System.out.println(uEmail);
+
+    Customer customer = _customerService.getCustomerByEmail(uEmail);
+    Account account = bankService.getAccount(customer.get_id());
+
+    account.depositMoney(amount);
+    Account rAccount = bankService.createAccount(account);
+    return rAccount;
   }
 
   @GetMapping("")

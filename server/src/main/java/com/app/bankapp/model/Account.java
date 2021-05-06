@@ -151,4 +151,12 @@ public class Account {
       "}"
     );
   }
+
+  public void withDrawMoney(Double amount) {
+    if (this._balance > amount) this._balance = this._balance - amount;
+  }
+
+  public void depositMoney(Double amount) {
+    this._balance = this._balance + amount;
+  }
 }
