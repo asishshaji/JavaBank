@@ -94,9 +94,7 @@ public class CustomerController {
     @RequestHeader("authorization") String jwtToken,
     @PathVariable Double amount
   ) {
-    System.out.println("helloooo");
     String uEmail = Helpers.parseJWT(jwtToken);
-    System.out.println(uEmail);
 
     Customer customer = _customerService.getCustomerByEmail(uEmail);
     Account account = bankService.getAccount(customer.get_id());
@@ -111,9 +109,7 @@ public class CustomerController {
     @RequestHeader("authorization") String jwtToken,
     @PathVariable Double amount
   ) {
-    System.out.println("helloooo");
     String uEmail = Helpers.parseJWT(jwtToken);
-    System.out.println(uEmail);
 
     Customer customer = _customerService.getCustomerByEmail(uEmail);
     Account account = bankService.getAccount(customer.get_id());
